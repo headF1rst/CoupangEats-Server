@@ -57,6 +57,7 @@ exports.passwordCheck = async function (selectUserPasswordParams) {
     return checkedPasswordResult;
 };
 
+// 계정 확인
 exports.accountCheck = async function (Id) {
     const connection = await pool.getConnection(async (conn) => conn);
     const accountCheckResult = await userDao.accountCheck(connection, Id);
@@ -64,3 +65,22 @@ exports.accountCheck = async function (Id) {
 
     return accountCheckResult;
 };
+
+// 즐겨찾기 목록 조회
+exports.searchFav = async function () {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getFavResult = await userDao.getFav(connection);
+    connection.release();
+
+    return getFavResult;
+};
+
+// 즐겨찾기 최근 추가 순 조회
+exports.favSortByRec = async function () {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getFavSortedResult = await userDao.getFavSortByRec(connection);
+    connection.release();
+
+    return getFavSortedResult;
+};
+

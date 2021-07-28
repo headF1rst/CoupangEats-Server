@@ -26,3 +26,64 @@ exports.getFoodsFromMenu = async function (menuId, storeId) {
 
     return FoodsInMenuResult;
 };
+
+exports.getStore = async function (storeName) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const storeName2 = '%' + storeName + '%';
+    const FindStore = await storeDao.getStore(connection, storeName2);
+    connection.release();
+
+    return FindStore;
+};
+
+exports.getStoreReview = async function (storeId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const findReview = await storeDao.getStoreReview(connection, storeId);
+    connection.release();
+
+    return findReview;
+};
+
+exports.getCheetahDel = async function () {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const cheetahResult = await storeDao.getCheetah(connection);
+    connection.release();
+
+    return cheetahResult;
+};
+
+exports.getStoreSortNew = async function () {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const sortStoreByNewResult = await storeDao.getStoreByNew(connection);
+    connection.release();
+
+    return sortStoreByNewResult;
+};
+
+exports.getReviewSortGood = async function (storeName) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const sortReviewByGood = await storeDao.getRiviewByHigh(connection, storeName);
+    connection.release();
+
+    return sortReviewByGood;
+};
+
+exports.getReviewSortBad = async function (storeName) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const sortReviewByBad = await storeDao.getRiviewByLow(connection, storeName);
+    connection.release();
+
+    return sortReviewByBad;
+};
+
+exports.getStoreByReview = async function () {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const storeByReview = await storeDao.storeByStar(connection);
+    connection.release();
+
+    return storeByReview;
+};
+
+
+
+

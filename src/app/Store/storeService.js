@@ -35,3 +35,29 @@ exports.createstore = async function (email, password, nickname) {
         return errResponse(baseResponse.DB_ERROR);
     }
 };
+
+// 리뷰생성 
+exports.addReviews = async function (userIdFromJWT, storeId, orderId, reviewImageURL, rating) {
+    try {
+        const connection = await pool.getConnection(async (conn) => conn); // DB연결 
+        const reviewAdd = await storeDao.postReviews(connection, userIdFromJWT, storeId, orderId, reviewImageURL, rating);
+
+        connection.release();
+    } catch (err) {
+        logger.error(`App - Posting Review Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+};
+
+// 리뷰수정
+exports.changeReviews = async function (reviewImageURL, rating, userIdFromJWT, reviewId) {
+    try {
+        const connection = await pool.getConnection(async (conn) => conn); // DB연결
+        const reviewChange = await storeDao.patchReviews(connection, reviewImageURL, rating, userIdFromJWT, reviewId);
+
+        connection.release();
+    } catch (err) {
+        logger.error(`App - Editing Review Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+};
